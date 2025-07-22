@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-    provider = "sqlite"
+    provider = "postgresql"
     // NOTE: When using mysql or sqlserver, uncomment the @db.Text annotations in model Account below
     // Further reading:
     // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
@@ -14,17 +14,8 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Post {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
 
-    createdBy   User   @relation(fields: [createdById], references: [id])
-    createdById String
 
-    @@index([name])
-}
 
 // Necessary for Next auth
 model Account {
@@ -54,15 +45,21 @@ model Session {
     user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+
+enum UserRole {
+    ADMIN
+    USER
+}
+
 model User {
     id            String    @id @default(cuid())
     name          String?
     email         String?   @unique
     emailVerified DateTime?
     image         String?
+    role          UserRole  @default(USER)
     accounts      Account[]
     sessions      Session[]
-    posts         Post[]
 }
 
 model VerificationToken {
@@ -71,4 +68,26 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+
+model Registration {
+    id                String   @id @default(cuid())
+    name              String
+    email             String
+    phone             String
+    school            String
+    position          String
+    experience        String
+    dietary           String?  // Optional field
+    accommodation     String?  // Optional field  
+    message           String?  // Optional field
+    registrationType  String   // early-bird, standard, student
+    status            String   @default("pending") // pending, confirmed, cancelled
+    createdAt         DateTime @default(now())
+    updatedAt         DateTime @updatedAt
+
+    @@index([email])
+    @@index([registrationType])
+    @@index([status])
 }
