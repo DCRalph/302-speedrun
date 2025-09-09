@@ -16,11 +16,11 @@ type Post = {
   published: boolean;
 };
 
-export default function AdminBlogManager({ initialPosts }: { initialPosts: Post[] }) {
+export default function AdminBlogManager() {
   const utils = api.useUtils();
   const [editing, setEditing] = useState<Post | null>(null);
 
-  const { data: list } = api.adminBlog.listAll.useQuery({ limit: 20 }, { initialData: { items: initialPosts, nextCursor: undefined } });
+  const { data: list } = api.adminBlog.listAll.useQuery({ limit: 20 });
 
   const upsert = api.adminBlog.upsertPost.useMutation({
     onSuccess: async () => {
