@@ -1,5 +1,4 @@
 "use client"
-
 import type React from "react"
 import { motion } from "motion/react"
 import { Button } from "~/components/ui/button"
@@ -9,10 +8,8 @@ import { Calendar, MapPin, Users, Award, BookOpen, Network, Mic, Phone, Mail } f
 import Image from "next/image"
 import Navbar from "~/components/Navbar"
 import Link from "next/link"
-import { api } from "~/trpc/server"
 
-export default async function HomePage() {
-  const { items: recent } = await api.blog.listPosts({ limit: 1, publishedOnly: true })
+export default function HomePage({ recent }: { recent: any | null }) {
   const fadeInUp = {
     initial: { opacity: 0, y: 60 },
     animate: { opacity: 1, y: 0 },
