@@ -48,6 +48,9 @@ export default function Navbar() {
               <Link href="/register" className="text-gray-700 hover:text-blue-600 transition-colors">
                 Register
               </Link>
+              <Link href="/blog" className="text-gray-700 hover:text-blue-600 transition-colors">
+                Blog
+              </Link>
             </nav>
 
             {/* Desktop Auth */}
@@ -230,6 +233,11 @@ export default function Navbar() {
                   <a href="/register" className="w-full font-medium">
                     Register
                   </a>
+                </DropdownMenuItem>
+                <DropdownMenuItem className="cursor-pointer">
+                  <Link href="/blog" className="w-full">
+                    Blog
+                  </Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

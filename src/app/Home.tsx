@@ -8,8 +8,11 @@ import { Badge } from "~/components/ui/badge"
 import { Calendar, MapPin, Users, Award, BookOpen, Network, Mic, Phone, Mail } from "lucide-react"
 import Image from "next/image"
 import Navbar from "~/components/Navbar"
+import Link from "next/link"
+import { api } from "~/trpc/server"
 
-export default function HomePage() {
+export default async function HomePage() {
+  const { items: recent } = await api.blog.listPosts({ limit: 1, publishedOnly: true })
   const fadeInUp = {
     initial: { opacity: 0, y: 60 },
     animate: { opacity: 1, y: 0 },
@@ -96,6 +99,35 @@ export default function HomePage() {
               </div>
             </motion.div>
           </div>
+        </div>
+      </section>
+
+      {/* Recent Blog Post */}
+      <section className="py-8">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-2xl font-bold text-gray-900">Latest from the Blog</h2>
+            <Link href="/blog" className="text-blue-600 hover:underline">View all</Link>
+          </div>
+          {recent[0] ? (
+            <Link href={`/blog/${recent[0]?.slug}`} className="block">
+              <Card className="hover:shadow-lg transition-shadow duration-300 border-0 shadow-md">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-xl text-gray-900">{recent[0]?.title}</CardTitle>
+                  {recent[0]?.publishedAt && (
+                    <p className="text-sm text-gray-500">{new Date(recent[0]!.publishedAt!).toLocaleDateString()} • {recent[0]?.author?.name ?? "Unknown"}</p>
+                  )}
+                </CardHeader>
+                <CardContent>
+                  {recent[0]?.excerpt && (
+                    <CardDescription className="text-gray-700 leading-relaxed">{recent[0]?.excerpt}</CardDescription>
+                  )}
+                </CardContent>
+              </Card>
+            </Link>
+          ) : (
+            <p className="text-gray-600">No posts yet.</p>
+          )}
         </div>
       </section>
 
