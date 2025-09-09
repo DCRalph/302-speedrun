@@ -9,7 +9,15 @@ import Image from "next/image"
 import Navbar from "~/components/Navbar"
 import Link from "next/link"
 
-export default function HomePage({ recent }: { recent: any | null }) {
+type RecentPost = {
+  title: string
+  slug: string | null
+  excerpt: string | null
+  publishedAt: Date | null
+  authorName: string | null
+}
+
+export default function HomePage({ recent }: { recent: RecentPost | null }) {
   const fadeInUp = {
     initial: { opacity: 0, y: 60 },
     animate: { opacity: 1, y: 0 },
@@ -106,18 +114,18 @@ export default function HomePage({ recent }: { recent: any | null }) {
             <h2 className="text-2xl font-bold text-gray-900">Latest from the Blog</h2>
             <Link href="/blog" className="text-blue-600 hover:underline">View all</Link>
           </div>
-          {recent[0] ? (
-            <Link href={`/blog/${recent[0]?.slug}`} className="block">
+          {recent ? (
+            <Link href={`/blog/${recent.slug ?? ""}`} className="block">
               <Card className="hover:shadow-lg transition-shadow duration-300 border-0 shadow-md">
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-xl text-gray-900">{recent[0]?.title}</CardTitle>
-                  {recent[0]?.publishedAt && (
-                    <p className="text-sm text-gray-500">{new Date(recent[0]!.publishedAt!).toLocaleDateString()} • {recent[0]?.author?.name ?? "Unknown"}</p>
+                  <CardTitle className="text-xl text-gray-900">{recent.title}</CardTitle>
+                  {recent.publishedAt && (
+                    <p className="text-sm text-gray-500">{new Date(recent.publishedAt).toLocaleDateString()} • {recent.authorName ?? "Unknown"}</p>
                   )}
                 </CardHeader>
                 <CardContent>
-                  {recent[0]?.excerpt && (
-                    <CardDescription className="text-gray-700 leading-relaxed">{recent[0]?.excerpt}</CardDescription>
+                  {recent.excerpt && (
+                    <CardDescription className="text-gray-700 leading-relaxed">{recent.excerpt}</CardDescription>
                   )}
                 </CardContent>
               </Card>

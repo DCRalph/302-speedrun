@@ -15,18 +15,21 @@ export default async function BlogIndexPage() {
           <h1 className="text-3xl font-bold text-gray-900 mb-6">Blog</h1>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {items.map((post) => (
-              <PostCard key={post.id} post={{
-                id: post.id,
-                title: post.title,
-                slug: post.slug ?? null,
-                excerpt: post.excerpt ?? null,
-                coverImageUrl: post.coverImageUrl ?? null,
-                publishedAt: post.publishedAt ?? null,
-                author: { name: post.author?.name ?? null },
-                categories: post.categories as any,
-                tags: post.tags as any,
-                _count: post._count as any,
-              }} />
+              <PostCard
+                key={post.id}
+                post={{
+                  id: post.id,
+                  title: post.title,
+                  slug: post.slug ?? null,
+                  excerpt: post.excerpt ?? null,
+                  coverImageUrl: post.coverImageUrl ?? null,
+                  publishedAt: post.publishedAt ?? null,
+                  author: { name: post.author?.name ?? null },
+                  categories: post.categories as unknown as any,
+                  tags: post.tags as unknown as any,
+                  _count: post._count as unknown as any,
+                }}
+              />
             ))}
           </div>
         </div>

@@ -77,7 +77,21 @@ export default function AdminBlogManager() {
                 <p className="text-xs text-gray-500">{p.slug}</p>
               </div>
               <div className="flex gap-2">
-                <Button variant="outline" onClick={() => setEditing(p as any)}>Edit</Button>
+                <Button
+                  variant="outline"
+                  onClick={() =>
+                    setEditing({
+                      id: p.id,
+                      title: p.title,
+                      slug: p.slug,
+                      excerpt: p.excerpt,
+                      content: (p as unknown as { content: string }).content,
+                      published: p.published,
+                    })
+                  }
+                >
+                  Edit
+                </Button>
                 <Button variant="destructive" onClick={() => del.mutate({ id: p.id })}>Delete</Button>
               </div>
             </div>
