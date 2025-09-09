@@ -3,8 +3,9 @@ import { api } from "~/trpc/server";
 import { CommentForm } from "~/components/blog/CommentForm";
 import { CommentList } from "~/components/blog/CommentList";
 
-export default async function BlogPostPage({ params }: { params: { slug: string } }) {
-  const post = await api.blog.getBySlug({ slug: params.slug });
+export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const post = await api.blog.getBySlug({ slug });
   if (!post) return <div className="min-h-screen"><Navbar /><div className="container mx-auto px-4 py-10">Post not found</div></div>;
 
   return (
