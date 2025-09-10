@@ -96,7 +96,7 @@ export const blogRouter = createTRPCRouter({
       const post = await ctx.db.blogPost.findUnique({
         where: { id: input.postId },
       });
-      if (!post || !post.published) {
+      if (!post?.published) {
         throw new Error("Post not found or not accepting comments");
       }
 

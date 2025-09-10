@@ -25,9 +25,9 @@ export default async function BlogIndexPage() {
                   coverImageUrl: post.coverImageUrl ?? null,
                   publishedAt: post.publishedAt ?? null,
                   author: { name: post.author?.name ?? null },
-                  categories: post.categories as unknown as any,
-                  tags: post.tags as unknown as any,
-                  _count: post._count as unknown as any,
+                  categories: post.categories,
+                  tags: post.tags,
+                  _count: post._count,
                 }}
               />
             ))}
