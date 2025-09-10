@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { api } from "~/trpc/react";
-import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
+import { Card, CardContent } from "~/components/ui/card";
 import { Button } from "~/components/ui/button";
 import { Badge } from "~/components/ui/badge";
 import Link from "next/link";
@@ -41,7 +41,7 @@ export default function AdminComments() {
         <p className="text-gray-500">Loading pending comments…</p>
       ) : pendingCount === 0 ? (
         <Card>
-          <CardContent className="p-6 text-gray-600">No pending comments. You're all caught up!</CardContent>
+          <CardContent className="p-6 text-gray-600">{`No pending comments. You're all caught up!`}</CardContent>
         </Card>
       ) : (
         <div className="space-y-4">
