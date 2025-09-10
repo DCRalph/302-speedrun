@@ -179,6 +179,27 @@ export default function AdminDashboard() {
             </Link>
           </Card>
 
+          {/* Blog Management */}
+          <Card className="bg-white/80 backdrop-blur-sm hover:shadow-lg transition-shadow cursor-pointer">
+            <Link href="/admin/blog">
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <FileText className="w-5 h-5 mr-2 text-pink-600" />
+                  Blog Management
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600 mb-4">
+                  Create, edit, publish, and organize blog posts.
+                </p>
+                <div className="flex items-center justify-between">
+                  <Badge className="bg-gray-100 text-gray-800">New</Badge>
+                  <Eye className="w-4 h-4 text-gray-400" />
+                </div>
+              </CardContent>
+            </Link>
+          </Card>
+
           {/* Reports */}
           <Card className="bg-white/80 backdrop-blur-sm hover:shadow-lg transition-shadow">
             <CardHeader>
@@ -232,6 +253,20 @@ export default function AdminDashboard() {
                 <Button className="bg-blue-600 hover:bg-blue-700">
                   <Users className="w-4 h-4 mr-2" />
                   View All Registrations
+                </Button>
+              </Link>
+
+              <Link href="/admin/blog">
+                <Button className="bg-pink-600 hover:bg-pink-700">
+                  <FileText className="w-4 h-4 mr-2" />
+                  Manage Blog Posts
+                </Button>
+              </Link>
+
+              <Link href="/admin/blog/comments">
+                <Button variant="outline">
+                  <FileText className="w-4 h-4 mr-2" />
+                  Moderate Comments
                 </Button>
               </Link>
 

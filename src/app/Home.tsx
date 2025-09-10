@@ -1,5 +1,4 @@
 "use client"
-
 import type React from "react"
 import { motion } from "motion/react"
 import { Button } from "~/components/ui/button"
@@ -8,8 +7,17 @@ import { Badge } from "~/components/ui/badge"
 import { Calendar, MapPin, Users, Award, BookOpen, Network, Mic, Phone, Mail } from "lucide-react"
 import Image from "next/image"
 import Navbar from "~/components/Navbar"
+import Link from "next/link"
 
-export default function HomePage() {
+type RecentPost = {
+  title: string
+  slug: string | null
+  excerpt: string | null
+  publishedAt: Date | null
+  authorName: string | null
+}
+
+export default function HomePage({ recent }: { recent: RecentPost | null }) {
   const fadeInUp = {
     initial: { opacity: 0, y: 60 },
     animate: { opacity: 1, y: 0 },
@@ -96,6 +104,35 @@ export default function HomePage() {
               </div>
             </motion.div>
           </div>
+        </div>
+      </section>
+
+      {/* Recent Blog Post */}
+      <section className="py-8">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-2xl font-bold text-gray-900">Latest from the Blog</h2>
+            <Link href="/blog" className="text-blue-600 hover:underline">View all</Link>
+          </div>
+          {recent ? (
+            <Link href={`/blog/${recent.slug ?? ""}`} className="block">
+              <Card className="hover:shadow-lg transition-shadow duration-300 border-0 shadow-md">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-xl text-gray-900">{recent.title}</CardTitle>
+                  {recent.publishedAt && (
+                    <p className="text-sm text-gray-500">{new Date(recent.publishedAt).toLocaleDateString()} • {recent.authorName ?? "Unknown"}</p>
+                  )}
+                </CardHeader>
+                <CardContent>
+                  {recent.excerpt && (
+                    <CardDescription className="text-gray-700 leading-relaxed">{recent.excerpt}</CardDescription>
+                  )}
+                </CardContent>
+              </Card>
+            </Link>
+          ) : (
+            <p className="text-gray-600">No posts yet.</p>
+          )}
         </div>
       </section>
 
